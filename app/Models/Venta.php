@@ -9,6 +9,12 @@ class Venta extends Model
 {
     use HasFactory;
     
+        protected $fillable = [  // Campos que se pueden asignar masivamente 
+            'user_id',
+            'membresia_id',
+            'total',
+            'fecha_venta',
+        ];
     /**
      * Una venta pertenece a un usuario.
      */

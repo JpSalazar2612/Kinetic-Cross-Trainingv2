@@ -9,6 +9,14 @@ class Membresia extends Model
 {
     /** @use HasFactory<\Database\Factories\MembresiaFactory> */
     use HasFactory;
+
+     protected $fillable = [  // Campos que se pueden asignar masivamente 
+        'nombre',
+        'descripcion',
+        'precio',
+        'duracion_dias',
+    ];
+
       public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();

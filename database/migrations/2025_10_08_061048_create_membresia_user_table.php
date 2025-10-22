@@ -11,23 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Esta es la tabla pivote para la relación muchos a muchos entre Membresia y User
+        // Tabla pivote para la relación muchos a muchos entre Membresia y User
         Schema::create('membresia_user', function (Blueprint $table) {
             $table->id();
             
-            // Llave foránea a la tabla 'membresias'
+            // Llave foránea a la tabla 'membresias' (debe existir antes)
             $table->foreignId('membresia_id')->constrained('membresias')->onDelete('cascade');
             
-            // Llave foránea a la tabla 'users'
+            // Llave foránea a la tabla 'users' (debe existir antes)
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             
-            // Agrega campos adicionales para la membresía, como fecha de inicio/fin
-            $table->timestamp('fecha_inicio');
+            // Campos pivote adicionales
+            $table->timestamp('fecha_inicio')->nullable();
             $table->timestamp('fecha_fin')->nullable();
             
             $table->timestamps();
             
-            // Asegura que un usuario solo pueda tener una membresía por ID (o puedes quitar si permites varias)
+            // Evita que un mismo usuario tenga la misma membresía duplicada
             $table->unique(['membresia_id', 'user_id']); 
         });
     }

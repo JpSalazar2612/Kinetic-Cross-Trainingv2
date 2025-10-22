@@ -9,6 +9,12 @@ class Producto extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductoFactory> */
     use HasFactory;
+        protected $fillable = [  // Campos que se pueden asignar masivamente 
+            'nombre',
+            'descripcion',
+            'precio',
+            'stock',
+        ];
 
     public function ventas()
     {

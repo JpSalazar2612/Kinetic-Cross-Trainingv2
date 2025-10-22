@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            // Clave foránea que conecta con el modelo Membresia (Relación Muchos a Uno)
-            $table->foreignId('membresia_id')->constrained()->onDelete('cascade'); 
-            $table->string('nombre', 150);
-            // Tipo de servicio (ej: 'Clase', 'Entrenamiento Personal', 'Nutrición')
-            $table->string('tipo', 100); 
-            $table->text('detalles')->nullable();
+            $table->foreignId('membresia_id')->constrained('membresias')->onDelete('cascade'); // La dependencia
+            $table->string('nombre');
+            $table->string('tipo')->nullable(); // <-- CAMBIO AÑADIDO: Incluir la columna 'tipo'
+            $table->text('detalles'); // <-- CAMBIO AÑADIDO: Usar 'detalles' en lugar de 'descripcion' para coincidir con el Seeder/Factory
             $table->timestamps();
         });
     }

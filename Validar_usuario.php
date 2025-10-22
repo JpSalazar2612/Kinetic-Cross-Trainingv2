@@ -9,6 +9,7 @@ $var_password = $_POST['pas_password'];
 // Verificar si la columna correcta es 'usu_correo' (ajustar si es otro nombre en la base de datos)
 $result = select_where("usuarios", "usu_correo='$var_email'");
 
+
 if(mysqli_num_rows($result) > 0) { // Verifica si el usuario existe
     // Si existe, procesamos los datos
     while($row = mysqli_fetch_object($result)) {

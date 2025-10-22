@@ -7,7 +7,7 @@ function db_connect() {
     $db_user = 'root';           // Usuario de la base de datos
     $db_password = '';       // Contraseña de la base de datos
     $db_name = 'gymsito';        // Nombre de la base de datos
-    $db_port = 3308;             // Puerto de conexión, por defecto es 3306
+    $db_port = 3306;             // Puerto de conexión, por defecto es 3306
 
     // Conexión a la base de datos
     $connection = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
