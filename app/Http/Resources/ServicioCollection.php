@@ -18,9 +18,10 @@ class ServicioCollection extends ResourceCollection
             return [
                 'id' => $servicio->id,
                 'nombre' => $servicio->nombre,
-                'descripcion' => $servicio->descripcion,
                 'precio' => $servicio->precio,
-                'duracion_minutos' => $servicio->duracion_minutos,
+                'tipo' => $servicio->tipo,
+                'detalles' => $servicio->detalles,
+                
                 //'created_at' => $servicio->created_at,
                 //'updated_at' => $servicio->updated_at,
                 ];  

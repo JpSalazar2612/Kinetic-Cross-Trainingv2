@@ -20,6 +20,12 @@ class VentaCollection extends ResourceCollection
                 'fecha' => $venta->fecha,
                 'total' => $venta->total,
                 'cliente_id' => $venta->cliente_id,
+                'membresia_id' => $venta->membresia_id,
+                'user_id' => $venta->user_id,
+                'metodo_pago' => $venta->metodo_pago,
+                'productos' => ProductoResource::collection($venta->whenLoaded('productos')),
+                
+                
                 //'created_at' => $venta->created_at,
                 //'updated_at' => $venta->updated_at,
                 ];  

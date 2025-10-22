@@ -24,8 +24,9 @@ class StoreServiciosRequest extends FormRequest
         return [
             'membresia_id' => 'required|exists:servicios,membresia_id',
             'nombre' => 'required|exists:servicios,nombre',
-            'tipo' => 'nullable|string',
-            'detalles' => 'required|string',
+            'descripcion' => 'required|exists:servicios,descripcion',
+            'precio' => 'required|exists:servicios,precio',
+            'duracion_minutos' => 'required|exists:servicios,duracion_minutos',
         ];
     }
 }

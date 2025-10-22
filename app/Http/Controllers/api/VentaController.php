@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Venta;
 
+use App\Http\Requests\StoreVentasRequest;
+use App\Http\Requests\UpdateVentasRequest;
+
 class VentaController extends Controller
 {
     public function index(){
@@ -24,6 +27,23 @@ class VentaController extends Controller
             return response()->json(['message' => 'Venta no encontrada'], 404);
         }
     }
+    public function store(StoreMembresiasRequest $request){
+        $venta = Venta::create($request->validated());
+
+        return (new VentaResource($venta))
+        ->response()
+        ->setStatusCode(201);
+    }
+    public function update(StoreMembresiasRequest $request, $id){
+        $venta = Venta::find($id);
+        if ($venta) {
+            $venta->update($request->validated()); 
+            return new VentaResource($venta);
+        } else {
+            return response()->json(['message' => 'Venta no encontrada'], 404);
+        }
+    }
+
     public function destroy($id){
         $venta = Venta::find($id);
         if ($venta) {

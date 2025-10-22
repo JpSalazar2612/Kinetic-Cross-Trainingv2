@@ -14,15 +14,15 @@ class MembresiaCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-         return $this->collection->map(function ($categoria) {
+         return $this->collection->map(function ($membresia) {
             return [
-                'id' => $categoria->id,
-                'nombre' => $categoria->nombre,
-                'descripcion' => $categoria->descripcion,
-                'precio' => $categoria->precio,
-                'duracion_meses' => $categoria->duracion_meses,
-                //'created_at' => $categoria->created_at,
-                //'updated_at' => $categoria->updated_at,
+                'id' => $membresia->id,
+                'nombre' => $membresia->nombre,
+                'precio' => $membresia->precio,
+                'duracion_dias' => $membresia->duracion_dias,
+                'descripcion' => $membresia->descripcion,
+                //'created_at' => $membresia->created_at,
+                //'updated_at' => $membresia->updated_at,
                 ];  
         })->toArray(); // Convertir la colección mapeada a un array
     }

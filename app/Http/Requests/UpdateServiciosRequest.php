@@ -25,6 +25,9 @@ class UpdateServicioRequest extends FormRequest
             'nombre' => 'sometimes|required|exists:servicios,nombre',
             'precio' => 'sometimes|required|exists:servicios,precio',
             'descripcion' => 'sometimes|required|exists:servicios,descripcion',
+            'duracion_minutos' => 'sometimes|required|exists:servicios,duracion_minutos',
+            'membresia_id' => 'sometimes|required|exists:servicios,membresia_id',
+            
         ];
     }
 }

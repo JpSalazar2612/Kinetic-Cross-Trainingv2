@@ -26,6 +26,7 @@ class UpdateVentasRequest extends FormRequest
             'servicio_id' => 'sometimes|required|exists:ventas,servicio_id',
             'cantidad' => 'sometimes|required|exists:ventas,cantidad',
             'total' => 'sometimes|required|exists:ventas,total',
+            
         ];
     }
 }

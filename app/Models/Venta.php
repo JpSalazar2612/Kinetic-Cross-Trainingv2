@@ -12,8 +12,10 @@ class Venta extends Model
         protected $fillable = [  // Campos que se pueden asignar masivamente 
             'user_id',
             'membresia_id',
+            'fecha',
             'total',
-            'fecha_venta',
+            'metodo_pago',
+            'cliente_id',
         ];
     /**
      * Una venta pertenece a un usuario.

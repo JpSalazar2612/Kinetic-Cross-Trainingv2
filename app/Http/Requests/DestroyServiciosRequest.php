@@ -23,6 +23,7 @@ class DestroyServiciosRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:servicios,id',
+            
         ];
     }
 }

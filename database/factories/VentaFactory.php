@@ -25,12 +25,13 @@ class VentaFactory extends Factory
     public function definition(): array
     {
         return [
+
             // NOTA: Solo incluimos los campos 'total' y 'metodo_pago'.
             // Los campos 'user_id' y 'membresia_id' se asignan en el DatabaseSeeder.
 
             // Monto total de la venta (ej. 50.00 a 500.00)
             'total' => $this->faker->randomFloat(2, 50.00, 500.00),
-            
+            'fecha' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),    
             // Método de pago
             'metodo_pago' => $this->faker->randomElement(['Tarjeta', 'Efectivo', 'Transferencia']),
         ];

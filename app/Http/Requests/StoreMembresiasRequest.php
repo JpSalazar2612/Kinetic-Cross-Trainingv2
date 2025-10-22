@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use App\Models\Membresia;
+
+
 class StoreMembresiasRequest extends FormRequest
 {
     /**
@@ -22,11 +25,11 @@ class StoreMembresiasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|exists:membresias,nombre',
-            'precio' => 'required|exists:membresias,precio',
-            'duracion' => 'required|exists:membresias,duracion',
-            'descripcion' => 'required|exists:membresias,descripcion',
-            
-        ];
+        
+        'nombre' => 'required|string|unique:membresias,id', // Para nuevos registros
+        'precio' => 'required|numeric|min:0', // Para permitir decimales
+        'duracion_dias' => 'required|integer|min:1', // El nombre correcto, y debe ser entero
+        'descripcion' => 'required|string',
+    ];
     }
 }

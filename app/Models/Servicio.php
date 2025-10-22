@@ -11,9 +11,10 @@ class Servicio extends Model
 
     protected $fillable = [  // Campos que se pueden asignar masivamente 
         'nombre',
-        'descripcion',
+        'tipo',
+        'detalles',
         'precio',
-        'membresia_id',
+        
     ];
     /**
      * Un Servicio pertenece a una sola Membresía (Muchos a Uno Inversa).
