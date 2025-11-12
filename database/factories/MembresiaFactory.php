@@ -24,19 +24,18 @@ class MembresiaFactory extends Factory
      */
     public function definition(): array
     {
-        // Definimos los tipos de membresía que existiran.
-        $tipos = ['Básico', 'Premium', 'VIP', 'Empresarial'];
+        // Usamos palabras aleatorias y un número único para GARANTIZAR la unicidad
+        // y evitar cualquier conflicto con los nombres fijos creados en el Seeder (Básico, Plata, etc.)
+        $name = $this->faker->unique()->randomElement(['Elite', 'Pro', 'Ultimate', 'Gold', 'Master', 'Focus']);
 
         return [
-            // El nombre debe ser único.
-            'nombre' => $this->faker->unique()->randomElement($tipos) . ' ' . $this->faker->numberBetween(1, 5),
+            // Utilizamos faker->unique() y un número aleatorio grande para asegurar un nombre único.
+            'nombre' => $name . ' Aleatorio ' . $this->faker->unique()->randomNumber(4), // Ejemplo: "Elite Aleatorio 4529"
             
-            'descripcion' => $this->faker->sentence(8),
+            'descripcion' => $this->faker->sentence(10),
             
-            // Precios entre 19.99 y 99.99
-            'precio' => $this->faker->randomFloat(2, 19.99, 99.99),
+            'precio' => $this->faker->randomFloat(2, 500.00, 5000.00),
             
-            // Duración en días (entre 30 días y 365 días)
             'duracion_dias' => $this->faker->randomElement([30, 90, 180, 365]),
         ];
     }

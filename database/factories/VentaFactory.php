@@ -31,7 +31,7 @@ class VentaFactory extends Factory
 
             // Monto total de la venta (ej. 50.00 a 500.00)
             'total' => $this->faker->randomFloat(2, 50.00, 500.00),
-            'fecha' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),    
+            'fecha_venta' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),    
             // Método de pago
             'metodo_pago' => $this->faker->randomElement(['Tarjeta', 'Efectivo', 'Transferencia']),
         ];

@@ -21,6 +21,10 @@ return new class extends Migration
             
             // Monto total de la transacción
             $table->decimal('total', 10, 2); 
+            
+            // Columna de fecha de venta (AÑADIDA)
+            $table->date('fecha_venta'); 
+            
             // Método de pago (ej: 'Tarjeta', 'Efectivo', 'Transferencia')
             $table->string('metodo_pago', 50); 
             $table->timestamps();

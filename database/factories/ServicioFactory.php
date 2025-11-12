@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Servicio; // Asegúrate de importar el modelo
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Servicio>
@@ -18,8 +19,8 @@ class ServicioFactory extends Factory
     {
         return [
             'nombre' => $this->faker->words(3, true),
-            // El 'membresia_id' se asignará en el Seeder para asegurar una ID válida
-             'membresia_id' => \App\Models\Membresia::factory(), // Alternativa si no usaras make()->each()
+            // ELIMINAMOS esta línea: 'membresia_id' => \App\Models\Membresia::factory(), 
+            // Ya que la asignaremos en el Seeder (each()) con IDs existentes.
             'tipo' => $this->faker->randomElement(['Clase Grupal', 'Entrenamiento Personal', 'Nutrición', 'Masaje']),
             'detalles' => $this->faker->paragraph(2),
         ];

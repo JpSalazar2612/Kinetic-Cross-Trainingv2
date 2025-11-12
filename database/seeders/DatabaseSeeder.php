@@ -13,6 +13,8 @@ use App\Models\Producto;
 use App\Models\Venta; // ¡CRUCIAL! Esta es la línea que resuelve el error.
 use App\Models\Membresia;
 
+use Database\Seeders\RolSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,14 +23,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RolSeeder::class); 
         // 1. Crear el usuario administrador
-        $admin = User::factory()->create([
-            'name' => 'Brandon Soto',
-            'email' => 'BrandonSoto@example.com',
-        ]);
+        User::factory()->create([
+            'name' => 'Juan Pablo Salazar Rodríguez',
+            'email' => 'Juan@example.com',
+        ])-> assignRole('Administrador');
+
+        // 1. Crear el usuario editor
+        User::factory()->create([
+            'name' => 'Erwin Santiago Arrega Avila',
+            'email' => 'Erwin@example.com',
+        ])-> assignRole('Editor');
 
         // 2. Crear 10 usuarios regulares
-        User::factory(10)->create();
+        User::factory(10)->create()->each(function ($user){
+            $user->assignRole('Usuario');
+        });
         
         // 3. Crear las 4 Membresías base
         Membresia::factory(4)->create();

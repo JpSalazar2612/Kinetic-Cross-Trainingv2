@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\api;
 
 use App\Http\Resources\MembresiaResource; // Importar el recurso CategoriaResource
 use App\Http\Resources\MembresiaCollection;
-
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,18 +13,24 @@ use App\Models\Membresia;
 use App\Http\Requests\StoreMembresiasRequest;
 use App\Http\Requests\UpdateMembresiasRequest;
 
+use Synfony\Componets\HttpFoundation\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class MembresiaController extends Controller
 {
+    use AuthorizesRequests;
      public function index(){
-        $membresia = Membresia::all();
-        return new MembresiaCollection($membresia);
-        $membresia = Membresia::with(['users', 'servicios', 'ventas'])->get(); 
-    
+        //$membresia = Membresia::all();
+        //return new MembresiaCollection($membresia);
+    $this->authorize ('Ver membresias');
+    $membresia = Membresia::with (['users', 'servicios', 'ventas'])->get(); 
+    return MembresiaResource::collection($membresia);
     // El Collection se encarga de aplicar el Resource a cada elemento.
-    return new MembresiaCollection($membresia);
+    //return new MembresiaCollection($membresia);
 
 }
     public function show($id){
+        $this ->authorize('Ver membresias');
         $membresia = Membresia::find($id);
         if ($membresia) {
             return new MembresiaResource($membresia);
@@ -44,6 +48,7 @@ class MembresiaController extends Controller
 }
    public function update(UpdateMembresiasRequest $request, $id) // <-- Usa UpdateMembresiaRequest
 {
+    $this->authorize('Actualizar membresias');
     // Usa Membresia (singular) en lugar de Membresias (como ya se corrigió antes)
     $membresia = Membresia::find($id); 
 
@@ -59,6 +64,7 @@ class MembresiaController extends Controller
     }
 }
     public function destroy($id){
+        $this->authorize('Eliminar membresias');
         $membresia = Membresia::find($id);
         if ($membresia) {
             $membresia->delete();

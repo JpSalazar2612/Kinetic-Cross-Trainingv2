@@ -13,13 +13,18 @@ use App\Models\Venta;
 use App\Http\Requests\StoreVentasRequest;
 use App\Http\Requests\UpdateVentasRequest;
 
+use Synfony\Componets\HttpFoundation\Response;
+use Iluminate\Foundation\Auth\Access\AuthorizesRequests;    
+
 class VentaController extends Controller
 {
     public function index(){
-        $ventas = Venta::all();
+        $this->authorize ('Ver ventas');
+        $ventas = Venta::with(['users', 'productos', 'membresias'])->get();
         return new VentaCollection($ventas);
     }
     public function show($id){
+        $this ->authorize('Ver ventas');
         $venta = Venta::find($id);
         if ($venta) {
             return new VentaResource($venta);
@@ -28,6 +33,7 @@ class VentaController extends Controller
         }
     }
     public function store(StoreMembresiasRequest $request){
+        $this->authorize('Crear ventas');
         $venta = Venta::create($request->validated());
 
         return (new VentaResource($venta))
@@ -35,6 +41,7 @@ class VentaController extends Controller
         ->setStatusCode(201);
     }
     public function update(StoreMembresiasRequest $request, $id){
+        $this->authorize('Actualizar ventas');
         $venta = Venta::find($id);
         if ($venta) {
             $venta->update($request->validated()); 
@@ -45,6 +52,7 @@ class VentaController extends Controller
     }
 
     public function destroy($id){
+        $this->authorize('Eliminar ventas');
         $venta = Venta::find($id);
         if ($venta) {
             $venta->delete();

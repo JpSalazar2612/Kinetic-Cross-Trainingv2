@@ -12,10 +12,15 @@ use App\Models\Producto;
 use App\Http\Requests\StoreProductosRequest;
 use App\Http\Requests\UpdateProductosRequest;
 
+use Synfony\Componets\HttpFoundation\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+
 class ProductoController extends Controller
 {
     public function index(){
-        $producto = Producto::all();
+        $this->authorize ('Ver productos');
+        $producto = Producto::with(['users', 'ventas'])->get(); 
         return new ProductoCollection($producto);
     }
     public function show($id){
@@ -27,12 +32,14 @@ class ProductoController extends Controller
         }
     }
     public function store(StoreMembresiasRequest $request){
+        $this->authorize('Crear productos');
         $producto= Producto::create ($request->validate());  
         return (new ProductoResource($producto))
         ->respone()
         ->setStatusCode(201);
     }
     public function update(StoreMembresiasRequest $request, $id){
+        $this->authorize('Actualizar productos');
         $producto = Producto::find($id);
         if ($producto) {
             $producto->update($request->validate());
@@ -42,6 +49,7 @@ class ProductoController extends Controller
         }
     }           
     public function destroy($id){
+        $this->authorize('Eliminar productos');
         $producto = Producto::find($id);
         if ($producto) {
             $producto->delete();
