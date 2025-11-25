@@ -148,5 +148,5 @@ test('destroy_editor', function () {  // Intenta eliminar un producto con un usu
 
     $response = $this->deleteJson("/api/productos/{$producto->id}");  // Realiza una solicitud DELETE a la ruta /api/productos/{id}
 
-    $response->assertStatus(Response::HTTP_FORBIDDEN);  // Verificar que el estado de la respuesta sea 403 Forbidden
+    $response->assertStatus(Response::HTTP_FORBIDDEN); 
 });

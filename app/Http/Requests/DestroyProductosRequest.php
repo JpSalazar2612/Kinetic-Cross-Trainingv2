@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
 class DestroyProductosRequest extends FormRequest
 {
     /**
@@ -24,5 +25,12 @@ class DestroyProductosRequest extends FormRequest
         return [
             'id' => 'required|exists:productos,id',
         ];
+    }
+     protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

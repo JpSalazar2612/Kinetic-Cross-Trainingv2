@@ -9,20 +9,14 @@ class Venta extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     * Aquí se incluyen todos los campos que el controlador 'store' puede llenar.
-     * Esto corrige el error "NOT NULL constraint failed".
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'user_id',          // Se llena automáticamente en el controlador
-        'membresia_id',     // Puede ser nulo
+        'user_id', 
+        'membresia_id', 
         'total',
-        'fecha_venta',      // Este era el campo que faltaba y causaba el error 500
+        'fecha_venta', 
         'metodo_pago',
     ];
+// ... (resto del código del modelo)
 
     /**
      * The attributes that should be cast to native types.

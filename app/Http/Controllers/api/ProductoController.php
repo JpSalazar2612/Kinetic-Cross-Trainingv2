@@ -21,8 +21,6 @@ class ProductoController extends Controller
 {
     use AuthorizesRequests; // Uso correcto para `authorize()`
 
-    
-
     /**
      * Muestra una lista de todos los productos.
      */

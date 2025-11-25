@@ -1,18 +1,117 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Kinetick API REST con Laravel",
-        "contact": {
-            "email": "Juan@cdhidalgo.tecnm.mx"
-        },
+        "title": "API Documentation",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000"
+            "url": "http://localhost:8000"
         }
     ],
     "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Generar Token de Acceso (Login)",
+                "description": "Autentica al usuario con correo, contraseña y dispositivo para obtener un token de acceso.",
+                "operationId": "1a8d4a3aa356c539118bca7ed8b657a5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "correo",
+                                    "contraseña",
+                                    "dispositivo"
+                                ],
+                                "properties": {
+                                    "correo": {
+                                        "description": "Correo del usuario.",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "Erwin@example.com"
+                                    },
+                                    "contraseña": {
+                                        "description": "Contraseña del usuario.",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "dispositivo": {
+                                        "description": "Nombre del dispositivo (e.g., 'windows', 'ios', 'android').",
+                                        "type": "string",
+                                        "example": "windows"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso. Retorna un token de acceso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "attributes": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Erwin Santiago Arrega Avila"
+                                                        },
+                                                        "correo": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "Erwin@example.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "description": "Token de acceso JWT.",
+                                                    "type": "string",
+                                                    "example": "lkYTYtksh64dJh9bqKrFa5GHpQZax2IA9D8fdI7Rc54a30ac"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales no válidas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciales no válidas"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/membresias": {
             "get": {
                 "tags": [
@@ -261,108 +360,6 @@
                         "bearer_token": []
                     }
                 ]
-            }
-        },
-        "/api/login": {
-            "post": {
-                "tags": [
-                    "Autenticación"
-                ],
-                "summary": "Generar Token de Acceso (Login)",
-                "description": "Autentica al usuario con correo, contraseña y dispositivo para obtener un token de acceso.",
-                "operationId": "2709aedd1f189f8e965bf9190a827c9c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "correo",
-                                    "contraseña",
-                                    "dispositivo"
-                                ],
-                                "properties": {
-                                    "correo": {
-                                        "description": "Correo del usuario.",
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "Erwin@example.com"
-                                    },
-                                    "contraseña": {
-                                        "description": "Contraseña del usuario.",
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password"
-                                    },
-                                    "dispositivo": {
-                                        "description": "Nombre del dispositivo (e.g., 'windows', 'ios', 'android').",
-                                        "type": "string",
-                                        "example": "windows"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Inicio de sesión exitoso. Retorna un token de acceso.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "attributes": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 2
-                                                        },
-                                                        "nombre": {
-                                                            "type": "string",
-                                                            "example": "Erwin Santiago Arrega Avila"
-                                                        },
-                                                        "correo": {
-                                                            "type": "string",
-                                                            "format": "email",
-                                                            "example": "Erwin@example.com"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "token": {
-                                                    "description": "Token de acceso JWT.",
-                                                    "type": "string",
-                                                    "example": "lkYTYtksh64dJh9bqKrFa5GHpQZax2IA9D8fdI7Rc54a30ac"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Credenciales no válidas.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Credenciales no válidas"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/api/productos": {
@@ -906,17 +903,403 @@
                         "bearer_token": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Ventas"
+                ],
+                "summary": "Crear una nueva venta",
+                "description": "Crea un nuevo registro de venta. Requiere autenticación con token Bearer.",
+                "operationId": "f3da82d2799e926cac43ba6419e2a280",
+                "requestBody": {
+                    "description": "Datos de la venta a crear",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "total",
+                                    "fecha_venta",
+                                    "metodo_pago"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "ID del usuario que realiza la venta",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "membresia_id": {
+                                        "description": "ID de la membresía asociada (Opcional)",
+                                        "type": "integer",
+                                        "example": 2,
+                                        "nullable": true
+                                    },
+                                    "total": {
+                                        "description": "Monto total de la venta",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150
+                                    },
+                                    "fecha_venta": {
+                                        "description": "Fecha de la venta (YYYY-MM-DD)",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-11-25"
+                                    },
+                                    "metodo_pago": {
+                                        "description": "Método de pago (ej: Tarjeta, Efectivo)",
+                                        "type": "string",
+                                        "example": "Tarjeta"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Venta creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID único de la venta",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "description": "ID del usuario que realizó la venta",
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "membresia_id": {
+                                            "description": "ID de la membresía asociada (puede ser null)",
+                                            "type": "integer",
+                                            "example": 2,
+                                            "nullable": true
+                                        },
+                                        "total": {
+                                            "description": "Monto total de la venta",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 150
+                                        },
+                                        "fecha_venta": {
+                                            "description": "Fecha de la venta",
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-11-25"
+                                        },
+                                        "metodo_pago": {
+                                            "description": "Método de pago",
+                                            "type": "string",
+                                            "example": "Tarjeta"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos de validación incorrectos"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/ventas/{id}": {
+            "get": {
+                "tags": [
+                    "Ventas"
+                ],
+                "summary": "Consultar una venta por ID",
+                "description": "Retorna los detalles de una venta específica, incluyendo el usuario y la membresía asociada (si aplica).",
+                "operationId": "47920b5a9341782bbd96534ae6f7a9ca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la venta a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID único de la venta",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "description": "ID del usuario que realizó la venta",
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "membresia_id": {
+                                            "description": "ID de la membresía asociada (puede ser null)",
+                                            "type": "integer",
+                                            "example": 2,
+                                            "nullable": true
+                                        },
+                                        "total": {
+                                            "description": "Monto total de la venta",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 150
+                                        },
+                                        "fecha_venta": {
+                                            "description": "Fecha de la venta",
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-11-25"
+                                        },
+                                        "metodo_pago": {
+                                            "description": "Método de pago (ej: Tarjeta, Efectivo)",
+                                            "type": "string",
+                                            "example": "Tarjeta"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Venta no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Ventas"
+                ],
+                "summary": "Actualizar una venta por ID",
+                "description": "Actualiza los datos de una venta existente. Requiere autenticación con token Bearer.",
+                "operationId": "7afe3b23754d53d98a0591ead6f56b38",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la venta a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Campos de la venta a actualizar",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "membresia_id": {
+                                        "description": "ID de la membresía asociada (Opcional)",
+                                        "type": "integer",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "total": {
+                                        "description": "Nuevo monto total",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 160
+                                    },
+                                    "fecha_venta": {
+                                        "description": "Nueva fecha de la venta",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-11-26"
+                                    },
+                                    "metodo_pago": {
+                                        "description": "Nuevo método de pago",
+                                        "type": "string",
+                                        "example": "Transferencia"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Venta actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID único de la venta",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "description": "ID del usuario que realizó la venta",
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "membresia_id": {
+                                            "description": "ID de la membresía asociada (puede ser null)",
+                                            "type": "integer",
+                                            "example": 2,
+                                            "nullable": true
+                                        },
+                                        "total": {
+                                            "description": "Monto total de la venta",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 150
+                                        },
+                                        "fecha_venta": {
+                                            "description": "Fecha de la venta",
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-11-25"
+                                        },
+                                        "metodo_pago": {
+                                            "description": "Método de pago",
+                                            "type": "string",
+                                            "example": "Tarjeta"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-11-25T14:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Venta no encontrada"
+                    },
+                    "422": {
+                        "description": "Datos de validación incorrectos"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Ventas"
+                ],
+                "summary": "Eliminar una venta por ID",
+                "description": "Elimina permanentemente un registro de venta. Retorna 204 No Content en caso de éxito.",
+                "operationId": "5018e377183308940490061ae3a960d4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la venta a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Venta eliminada exitosamente (No Content)"
+                    },
+                    "404": {
+                        "description": "Venta no encontrada"
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "token",
+                "scheme": "bearer"
             }
         }
     },
     "tags": [
         {
-            "name": "Membresias",
-            "description": "Membresias"
-        },
-        {
             "name": "Autenticación",
             "description": "Autenticación"
+        },
+        {
+            "name": "Membresias",
+            "description": "Membresias"
         },
         {
             "name": "Productos",

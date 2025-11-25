@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
 class UpdateVentasRequest extends FormRequest
 {
     /**
@@ -28,5 +29,12 @@ class UpdateVentasRequest extends FormRequest
             'fecha_venta' => 'sometimes|required|date',
             'metodo_pago' => 'sometimes|required|string|max:50',
         ];
+    }
+     protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

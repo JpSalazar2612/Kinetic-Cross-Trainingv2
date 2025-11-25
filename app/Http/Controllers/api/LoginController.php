@@ -14,7 +14,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class LoginController extends Controller
 {
     public function store(Request $request)
+
     {
+        
+        
         // Validar los datos de entrada
         $request->validate([
             'correo' => 'required|email',

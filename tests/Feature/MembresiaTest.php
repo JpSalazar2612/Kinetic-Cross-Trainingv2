@@ -175,7 +175,7 @@ test('destroy', function () {
     $response = $this->deleteJson("/api/membresias/{$membresia->id}"); 
 
     // Verificar que el estado de la respuesta sea 200 OK (o 204 No Content, dependiendo de tu controlador)
-    $response->assertStatus(Response::HTTP_OK); 
+    $response->assertStatus(Response::HTTP_NO_CONTENT); 
 
     // Verificar que se haya eliminado el registro
     $this->assertDatabaseMissing('membresias', ['id' => $membresia->id]);

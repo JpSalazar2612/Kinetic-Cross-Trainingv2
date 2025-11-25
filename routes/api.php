@@ -11,6 +11,10 @@ use App\Http\Controllers\api\LoginController;
 
 Route::post('login',[LoginController ::class,'store']);
 
+Route::options('{all:.*}', function(){
+    return response()->json();
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('membresias', MembresiaController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::apiResource('productos', ProductoController::class)->only(['index', 'show', 'store', 'update', 'destroy']);

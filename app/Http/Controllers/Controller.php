@@ -1,21 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Importación
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-abstract class Controller
+/**
+ * @OA\Info(
+ *     title="API Documentation",
+ *     version="1.0.0"
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="bearer_token",
+ *     type="http", 
+ *     scheme="bearer",
+ *     bearerFormat="token",
+ *     in="header",
+ *     name="Authorization"
+ * )
+ * @OA\Server(url="http://localhost:8000")
+ */
+
+class Controller extends BaseController 
 {
     use AuthorizesRequests, ValidatesRequests;
-       /**
-  * @OA\Info(
-    *     title="Kinetick API REST con Laravel",
-    *     version="1.0.0",
-    *     @OA\Contact(
-    *         email="Juan@cdhidalgo.tecnm.mx"
-    *     )
-    * )
-    *@OA\Server(url="http://127.0.0.1:8000")
-    */
 }

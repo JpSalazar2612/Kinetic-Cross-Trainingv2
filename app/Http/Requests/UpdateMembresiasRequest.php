@@ -5,7 +5,8 @@ namespace App\Http\Requests;
 use App\Models\Membresia;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule; 
-
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
 class UpdateMembresiasRequest extends FormRequest
 {
     /**
@@ -47,5 +48,12 @@ class UpdateMembresiasRequest extends FormRequest
             
             'tipo' => 'nullable|string|max:50',
         ];
+    }
+     protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

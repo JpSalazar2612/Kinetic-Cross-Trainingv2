@@ -16,16 +16,7 @@ use App\Http\Requests\UpdateMembresiasRequest;
 use Symfony\Componets\HttpFoundation\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-    /**
-  * @OA\Info(
-    *     title="Kinetick API REST con Laravel",
-    *     version="1.0.0",
-    *     @OA\Contact(
-    *         email="Juan@cdhidalgo.tecnm.mx"
-    *     )
-    * )
-    *@OA\Server(url="http://127.0.0.1:8000")
-    */
+
 
 class MembresiaController extends Controller
 {
@@ -69,6 +60,11 @@ class MembresiaController extends Controller
  * )
  * )
  */
+public function login(Request $request) 
+{
+    // ... Lógica de tu controlador para el login y creación del token
+}
+  
 
     /**
      * @OA\Get(

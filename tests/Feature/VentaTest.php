@@ -170,6 +170,6 @@ test('destroy_editor', function () {
     // Realiza una solicitud DELETE a la ruta /api/ventas/{id}
     $response = $this->deleteJson("/api/ventas/{$venta->id}");
 
-    // Verificar que el estado de la respuesta sea 403 Forbidden (el Editor no puede borrar)
+    // Verificar que el estado de la respuesta sea 204
     $response->assertStatus(Response::HTTP_FORBIDDEN);
 });
