@@ -16,11 +16,38 @@ use App\Http\Requests\UpdateVentasRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+
+
 class VentaController extends Controller
 {
     // Uso del trait AuthorizesRequests para que funcione $this->authorize()
     use AuthorizesRequests;
 
+        /**
+     * @OA\Get(
+     *    path="/api/ventas",
+     *    summary="Consultar todas las ventas",
+     *    description="Retorna todas las ventas",
+     *    tags={"Ventas"},
+     *    security={{"bearer_token":{}}},
+     *    @OA\Response(
+     *       response=200,
+     *      description="Operación exitosa",
+     *   ),
+     *   @OA\Response(
+     *     response=403,
+     *     description="No autorizado"
+     *   ),
+     *   @OA\Response(
+     *     response=404,
+     *     description="No se encontraron ventas"
+     *   ),
+     *   @OA\Response(
+     *    response=405,
+     *    description="Método no permitido"
+     *   )
+     * )
+     */
     public function index(){
         $this->authorize ('Ver ventas');
         // CORRECCIÓN 1: Se elimina 'productos' de la carga eagerly, ya que no está definida en Venta.php

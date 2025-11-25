@@ -31,13 +31,10 @@ class StoreMembresiasRequest extends FormRequest
                 Rule::unique('membresias', 'nombre'),
             ],
             
-            // CORREGIDO: Usamos 'costo' para coincidir con la migración
             'costo' => 'required|numeric|min:0',
             
-            // Se usa 'duracion_dias' (el nombre de la columna que ya tenías)
             'duracion_dias' => 'required|integer|min:1',
-            
-            // CORREGIDO: Usamos 'detalles' para coincidir con la migración
+        
             'detalles' => 'required|string|max:1000',
 
             'tipo' => 'nullable|string|max:50',

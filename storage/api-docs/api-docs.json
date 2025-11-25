@@ -1,0 +1,934 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Kinetick API REST con Laravel",
+        "contact": {
+            "email": "Juan@cdhidalgo.tecnm.mx"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/membresias": {
+            "get": {
+                "tags": [
+                    "Membresias"
+                ],
+                "summary": "Consultar todas las membresias",
+                "description": "Retorna todas las membresias",
+                "operationId": "1cd9a7dcaab60995bc8ca0bf136a68ab",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No se encontraron membresias"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Membresias"
+                ],
+                "summary": "Crear membresias",
+                "description": "Crear una nueva membresia",
+                "operationId": "344c0c800105033ea8085d518aaed42f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "tipo",
+                                    "costo",
+                                    "detalles",
+                                    "duracion_dias"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Membresia Oro"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "Mensual"
+                                    },
+                                    "costo": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "49.99"
+                                    },
+                                    "detalles": {
+                                        "type": "string",
+                                        "example": "Acceso completo a todas las instalaciones y clases."
+                                    },
+                                    "duracion_dias": {
+                                        "type": "integer",
+                                        "example": "30"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Membresia creada"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/membresias/{id}": {
+            "get": {
+                "tags": [
+                    "Membresias"
+                ],
+                "summary": "Consultar una membresia por ID",
+                "description": "Retorna una membresia específica",
+                "operationId": "c1f76712b5c4de4fb013b6c4694cae35",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la membresía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Membresia no encontrada"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Membresias"
+                ],
+                "summary": "Actualizar membresias",
+                "description": "Actualizar una membresia existente",
+                "operationId": "5b09986fbdbbcf129d27798f6eb378e8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la membresía a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "_method",
+                                    "nombre",
+                                    "tipo",
+                                    "costo",
+                                    "detalles",
+                                    "duracion_dias"
+                                ],
+                                "properties": {
+                                    "_method": {
+                                        "description": "Debe ser 'PUT' o 'PATCH'",
+                                        "type": "string",
+                                        "example": "PUT"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Membresia Platino"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "Anual"
+                                    },
+                                    "costo": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "499.99"
+                                    },
+                                    "detalles": {
+                                        "type": "string",
+                                        "example": "Acceso premium con entrenador personal y sauna."
+                                    },
+                                    "duracion_dias": {
+                                        "type": "integer",
+                                        "example": "365"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Membresia actualizada"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Membresia no encontrada"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Membresias"
+                ],
+                "summary": "Eliminar membresia",
+                "description": "Elimina una membresía existente por su ID.",
+                "operationId": "433d66fa69b76f24e0b39040b6a624c4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la membresía a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Membresía eliminada correctamente (Sin Contenido)"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Membresía no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Generar Token de Acceso (Login)",
+                "description": "Autentica al usuario con correo, contraseña y dispositivo para obtener un token de acceso.",
+                "operationId": "2709aedd1f189f8e965bf9190a827c9c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "correo",
+                                    "contraseña",
+                                    "dispositivo"
+                                ],
+                                "properties": {
+                                    "correo": {
+                                        "description": "Correo del usuario.",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "Erwin@example.com"
+                                    },
+                                    "contraseña": {
+                                        "description": "Contraseña del usuario.",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "dispositivo": {
+                                        "description": "Nombre del dispositivo (e.g., 'windows', 'ios', 'android').",
+                                        "type": "string",
+                                        "example": "windows"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso. Retorna un token de acceso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "attributes": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Erwin Santiago Arrega Avila"
+                                                        },
+                                                        "correo": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "Erwin@example.com"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "description": "Token de acceso JWT.",
+                                                    "type": "string",
+                                                    "example": "lkYTYtksh64dJh9bqKrFa5GHpQZax2IA9D8fdI7Rc54a30ac"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales no válidas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciales no válidas"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/productos": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Consultar todas los productos",
+                "description": "Retorna todas los productos",
+                "operationId": "3aaeb8ca130d00a7df6a35986370a18f",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No se encontraron productos"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Crear productos",
+                "description": "Crear un nuevo producto ",
+                "operationId": "e5a64f77fdea6674edfd95b565b98556",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "descripcion",
+                                    "precio",
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "description": "Nombre del producto",
+                                        "type": "string",
+                                        "example": "Producto A"
+                                    },
+                                    "descripcion": {
+                                        "description": "Descripción del producto",
+                                        "type": "string",
+                                        "example": "Descripción del Producto A"
+                                    },
+                                    "precio": {
+                                        "description": "Precio del producto",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "19.99"
+                                    },
+                                    "stock": {
+                                        "description": "Cantidad en stock del producto",
+                                        "type": "integer",
+                                        "example": "100"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/productos/{producto}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Consultar un producto por ID",
+                "description": "Retorna un producto específico",
+                "operationId": "2d9cc407fd950d8ef46774017f707f58",
+                "parameters": [
+                    {
+                        "name": "producto",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Actualizar un producto",
+                "description": "Actualiza un producto específico",
+                "operationId": "98ce624a5977d6c1e36e37b29605300b",
+                "parameters": [
+                    {
+                        "name": "producto",
+                        "in": "path",
+                        "description": "ID del producto a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "_method",
+                                    "nombre",
+                                    "descripcion",
+                                    "precio",
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "_method": {
+                                        "description": "Debe ser 'PUT' o 'PATCH'",
+                                        "type": "string",
+                                        "example": "PUT"
+                                    },
+                                    "nombre": {
+                                        "description": "Nombre del producto",
+                                        "type": "string",
+                                        "example": "Producto B (Actualizado)"
+                                    },
+                                    "descripcion": {
+                                        "description": "Descripción del producto",
+                                        "type": "string",
+                                        "example": "Descripción del Producto B (Actualizado)"
+                                    },
+                                    "precio": {
+                                        "description": "Precio del producto",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "25.50"
+                                    },
+                                    "stock": {
+                                        "description": "Cantidad en stock del producto",
+                                        "type": "integer",
+                                        "example": "50"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado exitosamente"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Eliminar un producto",
+                "description": "Elimina un producto específico",
+                "operationId": "a008ac3b1d9b6aabbcdd6aed72c6d5a1",
+                "parameters": [
+                    {
+                        "name": "producto",
+                        "in": "path",
+                        "description": "ID del producto a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Producto eliminado exitosamente (Sin contenido)"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/servicios": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Consultar todos los servicios",
+                "description": "Retorna todos los servicios",
+                "operationId": "92a3429958736e5480aa2241e712dba1",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No se encontraron servicios"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Crear un nuevo servicio",
+                "description": "Registra un nuevo servicio, asociado a una membresía existente.",
+                "operationId": "cccbb362648b059f3f87e342aacbf916",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "membresia_id",
+                                    "nombre",
+                                    "precio",
+                                    "duracion_minutos"
+                                ],
+                                "properties": {
+                                    "membresia_id": {
+                                        "description": "ID de la membresía a la que pertenece el servicio",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Clase de Spinning"
+                                    },
+                                    "precio": {
+                                        "description": "Precio del servicio (si no está incluido en la membresía)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "10.50"
+                                    },
+                                    "duracion_minutos": {
+                                        "type": "integer",
+                                        "example": "60"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "Clase"
+                                    },
+                                    "detalles": {
+                                        "type": "string",
+                                        "example": "Sesión de 1 hora de ciclismo indoor con instructor certificado."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Servicio creado"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "422": {
+                        "description": "Error de validación (e.g., membresia_id no existe)"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/servicios/{id}": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Consultar un servicio por ID",
+                "description": "Retorna un servicio específica",
+                "operationId": "80d6fee16e03050a91bf7970d7b51d00",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "servicio no encontrada"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Actualizar un servicio",
+                "description": "Actualiza un servicio existente por su ID.",
+                "operationId": "568749dd10bd0c5a0d0f1ab31609e463",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "_method",
+                                    "membresia_id",
+                                    "nombre",
+                                    "precio",
+                                    "duracion_minutos"
+                                ],
+                                "properties": {
+                                    "_method": {
+                                        "description": "Debe ser 'PUT' o 'PATCH'",
+                                        "type": "string",
+                                        "example": "PUT"
+                                    },
+                                    "membresia_id": {
+                                        "description": "ID de la membresía a la que pertenece el servicio",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Clase de Yoga Avanzada"
+                                    },
+                                    "precio": {
+                                        "description": "Precio del servicio",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "15.00"
+                                    },
+                                    "duracion_minutos": {
+                                        "type": "integer",
+                                        "example": "90"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "Clase Premium"
+                                    },
+                                    "detalles": {
+                                        "type": "string",
+                                        "example": "Clase especial de 90 minutos de yoga."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Servicio actualizado"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Eliminar un servicio",
+                "description": "Elimina un servicio existente por su ID.",
+                "operationId": "49bcc89d2f5ab0d314c16313ba3f4a2b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del servicio a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Servicio eliminado (No Content)"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/ventas": {
+            "get": {
+                "tags": [
+                    "Ventas"
+                ],
+                "summary": "Consultar todas las ventas",
+                "description": "Retorna todas las ventas",
+                "operationId": "a06664835e99057a7c46b7cf589ec9c8",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No se encontraron ventas"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Membresias",
+            "description": "Membresias"
+        },
+        {
+            "name": "Autenticación",
+            "description": "Autenticación"
+        },
+        {
+            "name": "Productos",
+            "description": "Productos"
+        },
+        {
+            "name": "Servicios",
+            "description": "Servicios"
+        },
+        {
+            "name": "Ventas",
+            "description": "Ventas"
+        }
+    ]
+}
