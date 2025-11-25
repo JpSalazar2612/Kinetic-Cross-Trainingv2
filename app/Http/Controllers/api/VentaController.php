@@ -2,63 +2,84 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Resources\VentaResource; // Importar el recurso CategoriaResource
+use App\Http\Resources\VentaResource; 
 use App\Http\Resources\VentaCollection; 
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Venta;
 
 use App\Http\Requests\StoreVentasRequest;
 use App\Http\Requests\UpdateVentasRequest;
 
-use Synfony\Componets\HttpFoundation\Response;
-use Iluminate\Foundation\Auth\Access\AuthorizesRequests;    
+// Imports corregidos
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class VentaController extends Controller
 {
+    // Uso del trait AuthorizesRequests para que funcione $this->authorize()
+    use AuthorizesRequests;
+
     public function index(){
         $this->authorize ('Ver ventas');
-        $ventas = Venta::with(['users', 'productos', 'membresias'])->get();
+        // CORRECCIÓN 1: Se elimina 'productos' de la carga eagerly, ya que no está definida en Venta.php
+        $ventas = Venta::with(['user', 'membresia'])->get(); 
         return new VentaCollection($ventas);
     }
+    
     public function show($id){
         $this ->authorize('Ver ventas');
-        $venta = Venta::find($id);
+        // CORRECCIÓN 1: Se elimina 'productos' de la carga eagerly
+        $venta = Venta::with(['user', 'membresia'])->find($id); 
+        
         if ($venta) {
             return new VentaResource($venta);
         } else {
-            return response()->json(['message' => 'Venta no encontrada'], 404);
+            return response()->json(['message' => 'Venta no encontrada'], Response::HTTP_NOT_FOUND); // Usamos la constante
         }
     }
-    public function store(StoreMembresiasRequest $request){
+    
+    public function store(StoreVentasRequest $request){
         $this->authorize('Crear ventas');
-        $venta = Venta::create($request->validated());
+
+        // *************** CORRECCIÓN CLAVE ***************
+        // 1. Obtener la data validada del request
+        $validatedData = $request->validated();
+        
+        // 2. Asignar el user_id del usuario autenticado antes de crear el registro
+        $validatedData['user_id'] = $request->user()->id; 
+
+        // 3. Crear la venta con la data completa (incluyendo user_id)
+        $venta = Venta::create($validatedData);
 
         return (new VentaResource($venta))
         ->response()
-        ->setStatusCode(201);
+        ->setStatusCode(Response::HTTP_CREATED); // Usamos la constante 201
     }
-    public function update(StoreMembresiasRequest $request, $id){
+    
+    // Corregido: Usar UpdateVentasRequest en lugar de StoreVentasRequest
+    public function update(UpdateVentasRequest $request, $id){
         $this->authorize('Actualizar ventas');
         $venta = Venta::find($id);
+        
         if ($venta) {
             $venta->update($request->validated()); 
             return new VentaResource($venta);
         } else {
-            return response()->json(['message' => 'Venta no encontrada'], 404);
+            return response()->json(['message' => 'Venta no encontrada'], Response::HTTP_NOT_FOUND);
         }
     }
 
     public function destroy($id){
         $this->authorize('Eliminar ventas');
         $venta = Venta::find($id);
+        
         if ($venta) {
             $venta->delete();
-            return response()->json(['message' => 'Venta eliminada correctamente'], 200);
+            return response()->json(['message' => 'Venta eliminada correctamente'], Response::HTTP_OK);
         } else {
-            return response()->json(['message' => 'Venta no encontrada'], 404);
+            return response()->json(['message' => 'Venta no encontrada'], Response::HTTP_NOT_FOUND);
         }
     }
 }

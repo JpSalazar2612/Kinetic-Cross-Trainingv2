@@ -22,8 +22,9 @@ class MembresiaResource extends JsonResource
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
+            'tipo' => $this->tipo,
+            'costo' => $this->costo,
+            'detalles' => $this->detalles,
             'duracion_dias' => $this->duracion_dias, 
             //'created_at' => $this->created_at,
             //'updated_at' => $this->updated_at,

@@ -22,11 +22,11 @@ class UpdateVentasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'producto_id' => 'sometimes|required|exists:ventas,producto_id',
-            'servicio_id' => 'sometimes|required|exists:ventas,servicio_id',
-            'cantidad' => 'sometimes|required|exists:ventas,cantidad',
-            'total' => 'sometimes|required|exists:ventas,total',
-            
+            // Corregido: Validar los campos reales de la tabla 'ventas' y hacerlos opcionales
+            'membresia_id' => 'sometimes|nullable|exists:membresias,id', 
+            'total' => 'sometimes|required|numeric|min:0',
+            'fecha_venta' => 'sometimes|required|date',
+            'metodo_pago' => 'sometimes|required|string|max:50',
         ];
     }
 }

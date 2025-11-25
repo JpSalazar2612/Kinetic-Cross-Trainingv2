@@ -8,39 +8,43 @@ use Illuminate\Database\Eloquent\Model;
 class Venta extends Model
 {
     use HasFactory;
-    
-        protected $fillable = [  // Campos que se pueden asignar masivamente 
-            'user_id',
-            'membresia_id',
-            'fecha',
-            'total',
-            'metodo_pago',
-            'cliente_id',
-        ];
+
     /**
-     * Una venta pertenece a un usuario.
+     * The attributes that are mass assignable.
+     * Aquí se incluyen todos los campos que el controlador 'store' puede llenar.
+     * Esto corrige el error "NOT NULL constraint failed".
+     *
+     * @var array<int, string>
      */
-     public function user()
-     {
-         return $this->belongsTo(User::class);
-     }
+    protected $fillable = [
+        'user_id',          // Se llena automáticamente en el controlador
+        'membresia_id',     // Puede ser nulo
+        'total',
+        'fecha_venta',      // Este era el campo que faltaba y causaba el error 500
+        'metodo_pago',
+    ];
 
-     /**
-      * Una Venta puede incluir una Membresía.
-      */
-     public function membresia()
-     {
-         return $this->belongsTo(Membresia::class);
-     }
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        // Asegura que fecha_venta se maneje como un objeto Carbon (date)
+        'fecha_venta' => 'date', 
+    ];
 
-     /**
-      * Una Venta puede tener muchos Productos (Muchos a Muchos).
-      */
-     public function productos()
-     {
-         // Usamos 'producto_venta' como tabla pivote
-         return $this->belongsToMany(Producto::class)
-                     ->withPivot('cantidad', 'precio_unitario') // Incluye campos pivote
-                     ->withTimestamps();
-     }
+    // Relación con el usuario que realizó la venta (1:N inverso)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relación con la membresía vendida (1:1 o 1:N, dependiendo del diseño)
+    public function membresia()
+    {
+        return $this->belongsTo(Membresia::class);
+    }
+    
+    // Si tienes una relación N:M con productos/servicios, deberías definirla aquí
 }

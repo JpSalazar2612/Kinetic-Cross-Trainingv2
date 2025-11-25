@@ -22,10 +22,12 @@ class StoreProductosRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|exists:productos,nombre',
-            'precio' => 'required|exists:productos,precio',
-            'stock' => 'required|exists:productos,stock',
-            'descripcion' => 'required|string',
+           'id' => 'sometimes|numeric|exists:productos,id', // 'sometimes' para el update
+        // Almacenamiento
+        'nombre' => 'required|string|max:255|unique:productos,nombre', // Debe ser único y string
+        'precio' => 'required|numeric|min:0', // Debe ser numérico y positivo
+        'stock' => 'required|integer|min:0', // Debe ser un entero positivo
+        'descripcion' => 'required|string',
         ];
     }
 }

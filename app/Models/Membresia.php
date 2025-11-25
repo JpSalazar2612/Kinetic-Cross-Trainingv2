@@ -12,8 +12,9 @@ class Membresia extends Model
 
      protected $fillable = [  // Campos que se pueden asignar masivamente 
         'nombre',
-        'descripcion',
-        'precio',
+        'tipo',
+        'costo',
+        'detalles',
         'duracion_dias',
     ];
 

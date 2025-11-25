@@ -3,11 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreServiciosRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determina si el usuario está autorizado a realizar esta solicitud.
      */
     public function authorize(): bool
     {
@@ -15,18 +16,19 @@ class StoreServiciosRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * Obtiene las reglas de validación que se aplican a la solicitud.
      */
     public function rules(): array
     {
         return [
-            'membresia_id' => 'required|exists:servicios,membresia_id',
-            'nombre' => 'required|exists:servicios,nombre',
-            'descripcion' => 'required|exists:servicios,descripcion',
-            'precio' => 'required|exists:servicios,precio',
-            'duracion_minutos' => 'required|exists:servicios,duracion_minutos',
+            // membresia_id debe existir en la tabla membresias
+            'membresia_id' => 'required|integer|exists:membresias,id',
+            // Debe ser único, string y requerido para la creación
+            'nombre' => 'required|string|max:255|unique:servicios,nombre',
+            'precio' => 'required|numeric|min:0.01',
+            'duracion_minutos' => 'required|integer|min:10|max:1440',
+            'tipo' => 'required|string|max:50', // Tipo de servicio
+            'detalles' => 'nullable|string', // Detalles opcionales
         ];
     }
 }

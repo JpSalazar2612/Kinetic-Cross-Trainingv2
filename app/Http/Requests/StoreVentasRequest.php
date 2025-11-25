@@ -11,7 +11,7 @@ class StoreVentasRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return True;
+        return true;
     }
 
     /**
@@ -22,10 +22,12 @@ class StoreVentasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'producto_id' => 'required|exists:ventas,producto_id',
-            'servicio_id' => 'required|exists:ventas,servicio_id',
-            'cantidad' => 'required|exists:ventas,cantidad',
-            'total' => 'required|exists:ventas,total',
+            // Corregido: Validar los campos reales de la tabla 'ventas'
+            // user_id es llenado por el sistema, no requerido aquí
+            'membresia_id' => 'nullable|exists:membresias,id', // Puede ser nulo
+            'total' => 'required|numeric|min:0',
+            'fecha_venta' => 'required|date',
+            'metodo_pago' => 'required|string|max:50',
         ];
     }
 }

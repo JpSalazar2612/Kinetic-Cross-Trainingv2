@@ -16,11 +16,11 @@ class ProductoPolicy
     }
    public function update(User $user, Producto $producto)
     {
-        return $user->is_admin || $user->id === $producto->user_id;
+        return $user->role === 'admin';
     }
     public function delete(User $user, Producto $producto)
     {
-        return $user->is_admin || $user->id === $producto->user_id;
+        return $user->role === 'admin';
     }
 
 }

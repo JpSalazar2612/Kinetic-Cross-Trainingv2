@@ -5,6 +5,12 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+// Asegúrate de que estos Resources existan y estén importados si estás cargando las relaciones
+use App\Http\Resources\UserResource; 
+use App\Http\Resources\MembresiaResource;
+// Si tienes un ProductoResource, también inclúyelo:
+// use App\Http\Resources\ProductoResource; 
+
 class VentaResource extends JsonResource
 {
     /**
@@ -15,26 +21,27 @@ class VentaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            // Asumo que tienes un 'id' aunque no está en $fillable
+            // 1. CAMPOS SIMPLES (Mapeados a camelCase para la respuesta JSON)
             'id' => $this->id, 
+            
+            // Mapeo snake_case (DB) a camelCase (JSON esperado por el Test)
             'user_id' => $this->user_id,
             'membresia_id' => $this->membresia_id,
             'total' => $this->total,
             'fecha_venta' => $this->fecha_venta,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'metodo_pago' => $this->metodo_pago,
 
             // 2. RELACIONES (Formateadas con sus Resources)
             
             // Relación belongsTo (Un solo objeto User)
-            // Nota: Aquí se usa ::make() en lugar de ::collection()
             'user' => UserResource::make($this->whenLoaded('user')),
             
             // Relación belongsTo (Un solo objeto Membresia)
             'membresia' => MembresiaResource::make($this->whenLoaded('membresia')),
             
             // Relación Many-to-Many (Colección de Productos)
-            'productos' => ProductoResource::collection($this->whenLoaded('productos')),
+            // Asegúrate de que ProductoResource esté definido y la relación 'productos' exista en Venta.php
+            // 'productos' => ProductoResource::collection($this->whenLoaded('productos')),
         ];
     }
 }

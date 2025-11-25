@@ -96,7 +96,7 @@ $lang = $_SESSION['lang'];  // Obtener el idioma de la sesión
                   <div class="container">
                      <div class="carousel-caption relative">
                         <h1>Kinetic<br> Cross Training<br></h1>
-                        <p>At Kinetic Cross Training, we promote family exercise in a warm and welcoming environment.<br> 
+                        <p >At Kinetic Cross Training, we promote family exercise in a warm and welcoming environment.<br> 
                            We believe training together strengthens family bonds, so we offer programs<br> 
                            tailored to all ages and levels, providing a safe and personalized experience for every family member.</p>
                         <div class="button_section"> <a class="main_bt" href="#">Read More</a>  </div>
@@ -122,7 +122,6 @@ $lang = $_SESSION['lang'];  // Obtener el idioma de la sesión
          </div>
       </section>
       <!-- footer -->
-      <footer>
          <div class="footer">
             <div class="container">
                <div class="row pdn-top-30">
@@ -155,7 +154,6 @@ $lang = $_SESSION['lang'];  // Obtener el idioma de la sesión
                <p>2024 My Website. All rights reserved. <a href="https://html.design/">Kinetic Cross Training</a></p>
             </div>
          </div>
-      </footer>
       <!-- end footer -->
       <!-- Javascript files-->
       <script src="js/jquery.min.js"></script>

@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('membresia_id')->constrained('membresias')->onDelete('cascade'); // La dependencia
-            $table->string('nombre');
-            $table->string('tipo')->nullable(); // <-- CAMBIO AÑADIDO: Incluir la columna 'tipo'
-            $table->text('detalles'); // <-- CAMBIO AÑADIDO: Usar 'detalles' en lugar de 'descripcion' para coincidir con el Seeder/Factory
+            $table->foreignId('membresia_id')->constrained('membresias')->onDelete('cascade');
+            $table->string('nombre')->unique(); // Añadido unique para coincidir con la validación en StoreRequest
+            
+            // COLUMNAS FALTANTES AÑADIDAS:
+            $table->decimal('precio', 8, 2); 
+            $table->integer('duracion_minutos'); 
+            
+            $table->string('tipo')->nullable();
+            $table->text('detalles')->nullable(); // Hecho nullable por si el factory no lo pone siempre
             $table->timestamps();
         });
     }

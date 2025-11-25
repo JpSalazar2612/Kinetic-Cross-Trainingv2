@@ -2,64 +2,85 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Resources\ServicioResource; // Importar el recurso CategoriaResource
+use App\Http\Resources\ServicioResource;
 use App\Http\Resources\ServicioCollection;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\Servicio;
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Http\Requests\StoreServiciosRequest;
-use App\Http\Requests\UpdateServiciosRequest;   
+use App\Http\Requests\UpdateServiciosRequest;
 
-use Synfony\Componets\HttpFoundation\Response;
+use App\Models\Servicio;
+use App\Models\Membresia;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;    
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ServicioController extends Controller
 {
-    public function index(){
-        $this->authorize ('Ver servicios');
-        $servicio = Servicio::with(['users', 'membresias'])->get();
-        return new ServicioCollection($servicio);
-    }
-    public function show($id){
-        $this ->authorize('Ver servicios');
-        $servicio = Servicio::find($id);
-        if ($servicio) {
-            return new ServicioResource($servicio);
-        } else {
-            return response()->json(['message' => 'Servicio no encontrado'], 404);
-        }
-    }
-    public function store(StoreMembresiasRequest $request){
-        $this->authorize('Crear servicios');
-        $servicio= Servicio::create ($request->validate());
+    use AuthorizesRequests;
 
-        return (new ServicioResource($servicio))
-        ->respone()
-        ->setStatusCode(201);
+    /**
+     * Muestra una lista de todos los servicios.
+     */
+    public function index()
+    {
+        $this->authorize('Ver servicios');
+        
+        $servicios = Servicio::with(['membresia'])->paginate(10); 
+        
+        return new ServicioCollection($servicios);
     }
-    public function update(StoreMembresiasRequest $request, $id){
+
+    /**
+     * Muestra un servicio específico.
+     * Usa Route Model Binding.
+     */
+    public function show(Servicio $servicio)
+    {
+        return new ServicioResource($servicio);
+    }
+
+    /**
+     * Crea un nuevo servicio.
+     */
+    public function store(StoreServiciosRequest $request)
+    {
+        $this->authorize('Crear servicios');
+        
+        $servicio = Servicio::create($request->validated()); 
+        
+        return (new ServicioResource($servicio))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED); 
+    }
+
+    /**
+     * Actualiza un servicio existente.
+     * Usa Route Model Binding.
+     */
+    public function update(UpdateServiciosRequest $request, Servicio $servicio)
+    {
         $this->authorize('Actualizar servicios');
-        $servicio = Servicio::find($id);
-        if ($servicio) {                
-            $servicio::update($request->validate());
-            return new ServicioResource($servicio);
-        } else {
-            return response()->json(['message' => 'Servicio no encontrado'], 404);
-        }
+        
+        $servicio->update($request->validated());
+        
+        return (new ServicioResource($servicio))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK); 
     }
     
-    Public function destroy($id){
+    /**
+     * Elimina un servicio.
+     * Usa Route Model Binding.
+     */
+    public function destroy(Servicio $servicio)
+    {
         $this->authorize('Eliminar servicios');
-        $servicio = Servicio::find($id);
-        if ($servicio) {
-            $servicio->delete();
-            return response()->json(['message' => 'Servicio eliminado correctamente'], 200);
-        } else {
-            return response()->json(['message' => 'Servicio no encontrado'], 404);
-        }
+        
+        $servicio->delete();
+        
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

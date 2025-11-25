@@ -13,7 +13,7 @@ use App\Models\Membresia;
 use App\Http\Requests\StoreMembresiasRequest;
 use App\Http\Requests\UpdateMembresiasRequest;
 
-use Synfony\Componets\HttpFoundation\Response;
+use Symfony\Componets\HttpFoundation\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class MembresiaController extends Controller

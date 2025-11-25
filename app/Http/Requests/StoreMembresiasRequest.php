@@ -3,9 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-use App\Models\Membresia;
-
+use Illuminate\Validation\Rule;
 
 class StoreMembresiasRequest extends FormRequest
 {
@@ -25,11 +23,25 @@ class StoreMembresiasRequest extends FormRequest
     public function rules(): array
     {
         return [
-        
-        'nombre' => 'required|string|unique:membresias,id', // Para nuevos registros
-        'precio' => 'required|numeric|min:0', // Para permitir decimales
-        'duracion_dias' => 'required|integer|min:1', // El nombre correcto, y debe ser entero
-        'descripcion' => 'required|string',
-    ];
+            // El campo 'nombre' es requerido y debe ser único
+            'nombre' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('membresias', 'nombre'),
+            ],
+            
+            // CORREGIDO: Usamos 'costo' para coincidir con la migración
+            'costo' => 'required|numeric|min:0',
+            
+            // Se usa 'duracion_dias' (el nombre de la columna que ya tenías)
+            'duracion_dias' => 'required|integer|min:1',
+            
+            // CORREGIDO: Usamos 'detalles' para coincidir con la migración
+            'detalles' => 'required|string|max:1000',
+
+            'tipo' => 'nullable|string|max:50',
+            'membresia_id' => 'sometimes|exists:membresias,id',
+        ];
     }
 }

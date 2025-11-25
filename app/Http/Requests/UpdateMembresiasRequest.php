@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Membresia;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule; 
 
@@ -14,7 +13,8 @@ class UpdateMembresiasRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // Asegura que solo los usuarios autenticados puedan realizar esta solicitud
+        return auth()->check(); 
     }
 
     /**
@@ -24,19 +24,28 @@ class UpdateMembresiasRequest extends FormRequest
      */
     public function rules(): array
     {
-        $membresiaId = $this->route('membresia'); // Obtener el ID de la membresía desde la ruta
+        // Obtiene el ID de la membresía de la ruta para ignorarla en la regla unique
+        $membresiaId = $this->route('membresia'); 
 
         return [
             'nombre' => [
-            'sometimes', // Solo valida si el campo 'nombre' está presente
-            'string',
-            // Aseguramos que el nuevo nombre sea único, excepto para el registro actual
-            Rule::unique('membresias', 'nombre')->ignore($membresiaId),
-        ],
-        // Solo 'sometimes' y el tipo de dato.
-        'precio' => 'sometimes|numeric|min:0', 
-        'duracion_dias' => 'sometimes|integer|min:1',
-        'descripcion' => 'sometimes|string',
-    ];
+                'sometimes', // Solo valida si el campo está presente en el request
+                'string',
+                'max:255',
+                // Asegura que el nombre sea único, excepto para el registro actual.
+                Rule::unique('membresias', 'nombre')->ignore($membresiaId),
+            ],
+            
+            // CORREGIDO: Usamos 'costo' para alinearlo con la migración
+            'costo' => 'sometimes|numeric|min:0', 
+            
+            // Se usa 'duracion_dias'
+            'duracion_dias' => 'sometimes|integer|min:1',
+            
+            // CORREGIDO: Usamos 'detalles' para alinearlo con la migración
+            'detalles' => 'sometimes|string|max:1000',
+            
+            'tipo' => 'nullable|string|max:50',
+        ];
     }
 }

@@ -2,38 +2,47 @@
 
 namespace Database\Factories;
 
+use App\Models\Venta;
+use App\Models\User;
+use App\Models\Membresia;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Venta; // Importamos el modelo
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Venta>
- */
 class VentaFactory extends Factory
 {
     /**
-     * Define el modelo correspondiente para la Factory.
+     * The name of the factory's corresponding model.
      *
      * @var string
      */
     protected $model = Venta::class;
 
     /**
-     * Define el estado por defecto del modelo.
+     * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
+            // 1. user_id (REQUIRED): Asegura que siempre se cree un usuario si no se especifica uno.
+            'user_id' => User::factory(), 
 
-            // NOTA: Solo incluimos los campos 'total' y 'metodo_pago'.
-            // Los campos 'user_id' y 'membresia_id' se asignan en el DatabaseSeeder.
+            // 2. membresia_id (OPTIONAL): Crea una membresía o lo deja nulo (depende del test)
+            'membresia_id' => Membresia::factory(), 
 
-            // Monto total de la venta (ej. 50.00 a 500.00)
-            'total' => $this->faker->randomFloat(2, 50.00, 500.00),
-            'fecha_venta' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),    
-            // Método de pago
-            'metodo_pago' => $this->faker->randomElement(['Tarjeta', 'Efectivo', 'Transferencia']),
+            'total' => $this->faker->randomFloat(2, 100, 1500),
+            'fecha_venta' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
+            'metodo_pago' => $this->faker->randomElement(['Tarjeta', 'Efectivo', 'Transferencia', 'PayPal']),
         ];
+    }
+    
+    /**
+     * Define the state where membresia_id is null.
+     */
+    public function noMembresia()
+    {
+        return $this->state([
+            'membresia_id' => null,
+        ]);
     }
 }

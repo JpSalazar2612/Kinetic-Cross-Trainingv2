@@ -10,10 +10,13 @@ class Servicio extends Model
     use HasFactory; // ¡IMPORTANTE! Esto habilita el método ::factory()
 
     protected $fillable = [  // Campos que se pueden asignar masivamente 
+        'id',
+        'membresia_id',
         'nombre',
+        'precio',
         'tipo',
         'detalles',
-        'precio',
+        'duracion_minutos',
         
     ];
     /**
