@@ -25,4 +25,8 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController 
 {
     use AuthorizesRequests, ValidatesRequests;
+    protected function jsonResponse($data = null, int $status = 200, array $headers = [], int $options = 0)
+    {
+        return response()->json($data, $status, $headers, $options);
+    }
 }

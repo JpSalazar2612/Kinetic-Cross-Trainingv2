@@ -17,6 +17,74 @@ use Laravel\Sanctum\Sanctum;
 uses(RefreshDatabase::class);
 uses(WithFaker::class);
 
+    Sanctum::actingAs(User::factory()->create()->assignRole('Editor')); 
+
+    // Crear una membresia de prueba
+    $membresia = Membresia::factory()->create(); 
+
+    // --- CORRECCIÓN CLAVE para Update ---
+    // Se utilizan valores nuevos y completos para la prueba PUT.
+    $data = [
+        'nombre' => 'Membresía Actualizada',
+        'tipo' => 'Anual',
+        'costo' => 499.99,
+        'detalles' => 'Descripción actualizada de la membresía.',
+        'duracion_dias' => 365,
+    ];
+
+    // Realiza una solicitud PUT (o PATCH si usas la ruta parcial)
+    $response = $this->putJson("/api/membresias/{$membresia->id}", $data); 
+    //dd($response->json()); // Descomenta si necesitas depurar
+
+    // Verificar que el estado de la respuesta sea 200 OK
+    $response->assertStatus(Response::HTTP_OK); 
+
+    // Verificar que se haya actualizado el registro en la base de datos
+    $this->assertDatabaseHas('membresias', [
+        'id' => $membresia->id,
+        'nombre' => $data['nombre'],
+        'tipo' => $data['tipo'],
+        'costo' => $data['costo'],
+        'detalles' => $data['detalles'],
+        'duracion_dias' => $data['duracion_dias'],
+    ]);
+});
+
+
+test('destroy', function () { 
+    $this->artisan('db:seed', ['--class' => 'RolSeeder']);
+
+    // Simula un usuario autenticado con el rol de Administrador
+    Sanctum::actingAs(User::factory()->create()->assignRole('Administrador')); 
+
+    // Crear una membresía
+    $membresia = Membresia::factory()->create(); 
+
+    // Realiza una solicitud DELETE
+    $response = $this->deleteJson("/api/membresias/{$membresia->id}"); 
+
+    // Verificar que el estado de la respuesta sea 200 OK (o 204 No Content, dependiendo de tu controlador)
+    $response->assertStatus(Response::HTTP_NO_CONTENT); 
+
+    // Verificar que se haya eliminado el registro
+    $this->assertDatabaseMissing('membresias', ['id' => $membresia->id]);
+});
+
+test('destroy_editor', function () { 
+    $this->artisan('db:seed', ['--class' => 'RolSeeder']); 
+
+    // Simula un usuario autenticado con el rol de Editor
+    Sanctum::actingAs(User::factory()->create()->assignRole('Editor')); 
+
+    // Crear una membresía
+    $membresia = Membresia::factory()->create(); 
+
+    // Realiza una solicitud DELETE
+    $response = $this->deleteJson("/api/membresias/{$membresia->id}"); 
+
+    // Verificar que el estado de la respuesta sea 403 Forbidden
+    $response->assertStatus(Response::HTTP_FORBIDDEN); 
+});
 test('index', function () {
     // Ejecuta el seeder de roles
     $this->artisan('db:seed', ['--class' => 'RolSeeder']);
@@ -128,71 +196,3 @@ test('update', function () {
     $this->artisan('db:seed', ['--class' => 'RolSeeder']);
 
     // Simula un usuario autenticado con el rol de Editor
-    Sanctum::actingAs(User::factory()->create()->assignRole('Editor')); 
-
-    // Crear una membresia de prueba
-    $membresia = Membresia::factory()->create(); 
-
-    // --- CORRECCIÓN CLAVE para Update ---
-    // Se utilizan valores nuevos y completos para la prueba PUT.
-    $data = [
-        'nombre' => 'Membresía Actualizada',
-        'tipo' => 'Anual',
-        'costo' => 499.99,
-        'detalles' => 'Descripción actualizada de la membresía.',
-        'duracion_dias' => 365,
-    ];
-
-    // Realiza una solicitud PUT (o PATCH si usas la ruta parcial)
-    $response = $this->putJson("/api/membresias/{$membresia->id}", $data); 
-    //dd($response->json()); // Descomenta si necesitas depurar
-
-    // Verificar que el estado de la respuesta sea 200 OK
-    $response->assertStatus(Response::HTTP_OK); 
-
-    // Verificar que se haya actualizado el registro en la base de datos
-    $this->assertDatabaseHas('membresias', [
-        'id' => $membresia->id,
-        'nombre' => $data['nombre'],
-        'tipo' => $data['tipo'],
-        'costo' => $data['costo'],
-        'detalles' => $data['detalles'],
-        'duracion_dias' => $data['duracion_dias'],
-    ]);
-});
-
-
-test('destroy', function () { 
-    $this->artisan('db:seed', ['--class' => 'RolSeeder']);
-
-    // Simula un usuario autenticado con el rol de Administrador
-    Sanctum::actingAs(User::factory()->create()->assignRole('Administrador')); 
-
-    // Crear una membresía
-    $membresia = Membresia::factory()->create(); 
-
-    // Realiza una solicitud DELETE
-    $response = $this->deleteJson("/api/membresias/{$membresia->id}"); 
-
-    // Verificar que el estado de la respuesta sea 200 OK (o 204 No Content, dependiendo de tu controlador)
-    $response->assertStatus(Response::HTTP_NO_CONTENT); 
-
-    // Verificar que se haya eliminado el registro
-    $this->assertDatabaseMissing('membresias', ['id' => $membresia->id]);
-});
-
-test('destroy_editor', function () { 
-    $this->artisan('db:seed', ['--class' => 'RolSeeder']); 
-
-    // Simula un usuario autenticado con el rol de Editor
-    Sanctum::actingAs(User::factory()->create()->assignRole('Editor')); 
-
-    // Crear una membresía
-    $membresia = Membresia::factory()->create(); 
-
-    // Realiza una solicitud DELETE
-    $response = $this->deleteJson("/api/membresias/{$membresia->id}"); 
-
-    // Verificar que el estado de la respuesta sea 403 Forbidden
-    $response->assertStatus(Response::HTTP_FORBIDDEN); 
-});

@@ -1,0 +1,51 @@
+[debug] [2025-11-25T19:26:55.140Z] ----------------------------------------------------------------------
+[debug] [2025-11-25T19:26:55.143Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\juanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-11-25T19:26:55.143Z] CLI Version:   14.26.0
+[debug] [2025-11-25T19:26:55.143Z] Platform:      win32
+[debug] [2025-11-25T19:26:55.143Z] Node Version:  v22.18.0
+[debug] [2025-11-25T19:26:55.143Z] Time:          Tue Nov 25 2025 13:26:55 GMT-0600 (hora estándar central)
+[debug] [2025-11-25T19:26:55.144Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\laragon\www\Proyecto\Kinetic-Cross-Training
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 
+[debug] [2025-11-25T19:31:21.992Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-25T19:31:21.992Z] > authorizing via signed-in user (s22030131@itsch.edu.mx)
+[debug] [2025-11-25T19:31:51.901Z] Checked if tokens are valid: true, expires at: 1764100105258
+[debug] [2025-11-25T19:31:51.901Z] Checked if tokens are valid: true, expires at: 1764100105258
+[debug] [2025-11-25T19:31:51.903Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1/projects:checkProjectId [none]
+[debug] [2025-11-25T19:31:51.903Z] >>> [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"proposedId":"kINETIC_CROSS_TRAINNING"}
+[debug] [2025-11-25T19:31:52.251Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1/projects:checkProjectId 400
+[debug] [2025-11-25T19:31:52.251Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"error":{"code":400,"message":"Request contains an invalid argument.","status":"INVALID_ARGUMENT"}}
+[debug] [2025-11-25T19:31:52.252Z] Couldn't check if project ID kINETIC_CROSS_TRAINNING is available. Original error: FirebaseError: Failed to check if project ID is available. See firebase-debug.log for more info.
+[debug] [2025-11-25T19:32:13.649Z] Checked if tokens are valid: true, expires at: 1764100105258
+[debug] [2025-11-25T19:32:13.649Z] Checked if tokens are valid: true, expires at: 1764100105258
+[debug] [2025-11-25T19:32:13.649Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2025-11-25T19:32:13.649Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"kINETIC_CROSS_TRAINNING","name":"kINETIC_CROSS_TRAINNING"}
+[debug] [2025-11-25T19:32:14.096Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 400
+[debug] [2025-11-25T19:32:14.096Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":400,"message":"Request contains an invalid argument.","status":"INVALID_ARGUMENT","details":[{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"project_id","description":"project_id contains invalid characters"},{"field":"display_name","description":"project display name contains invalid characters"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"url":"https://cloud.google.com/resource-manager/reference/rest/v1/projects"}]}]}}
+[debug] [2025-11-25T19:32:14.277Z] FirebaseError: Request to https://cloudresourcemanager.googleapis.com/v1/projects had HTTP Error: 400, Request contains an invalid argument.
+    at responseToError (C:\Users\juanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\juanp\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:322:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to create project. See firebase-debug.log for more info.

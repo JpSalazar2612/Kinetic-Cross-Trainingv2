@@ -1,13 +1,11 @@
 <?php
-// Aquí eliminamos la llamada a session_start(), ya que se ejecuta en Contacto.es.php
-
 // Función para realizar la conexión con la base de datos
 function db_connect() {
     $db_host = 'localhost';      // Servidor donde está alojada la base de datos
     $db_user = 'root';           // Usuario de la base de datos
-    $db_password = '';       // Contraseña de la base de datos
-    $db_name = 'gymsito';        // Nombre de la base de datos
-    $db_port = 3306;             // Puerto de conexión, por defecto es 3306
+    $db_password = '';   // Contraseña de la base de datos
+    $db_name = 'gymsito';   // Nombre de la base de datos
+    $db_port = '3306';           // Puerto
 
     // Conexión a la base de datos
     $connection = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
@@ -17,9 +15,6 @@ function db_connect() {
         die("Error de conexión: " . mysqli_connect_error());
     }
 
-    // Establecer el conjunto de caracteres UTF-8 para evitar problemas con caracteres especiales
-    mysqli_set_charset($connection, 'utf8mb4');
-
     return $connection;
 }
 
@@ -27,11 +22,6 @@ function db_connect() {
 function db_query($query) {
     $connection = db_connect();  // Llamamos a la conexión
     $result = mysqli_query($connection, $query);  // Ejecutamos la consulta
-
-    if (!$result) {
-        die("Error en la consulta: " . mysqli_error($connection));
-    }
-
     return $result;
 }
 
@@ -51,8 +41,7 @@ function select_where($tbl_name, $field_condition) {
 
 // Función para insertar registros en una tabla
 function insert($tbl_name, $db_values) {
-    // Asegurándonos de que los valores sean correctamente escapados
-    $sql = "INSERT INTO $tbl_name (con_nombre, con_correo, con_dudas) VALUES ($db_values)";
+    $sql = "INSERT INTO $tbl_name VALUES($db_values)";
     return db_query($sql);
 }
 

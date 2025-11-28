@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-11-2024 a las 22:41:16
+-- Tiempo de generación: 28-11-2024 a las 20:50:24
 -- Versión del servidor: 8.0.36
 -- Versión de PHP: 8.2.18
 
@@ -82,17 +82,16 @@ CREATE TABLE IF NOT EXISTS `servicios` (
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `usu_correo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `usu_num_tel` VARCHAR(10) NOT NULL,
   `usu_nombre` varchar(50) NOT NULL,
-  `usu_apellidos` varchar(50) DEFAULT NULL,
+  `usu_ap_pat` varchar(50) NOT NULL,
+  `usu_ap_mat` varchar(50) NOT NULL,
   `usu_edad` int NOT NULL,
-  `usu_genero` VARCHAR(50) NOT NULL,
+  `usu_genero` varchar(1) NOT NULL,
+  `usu_nivel` varchar(10) NOT NULL,
+  `usu_num_tel` int NOT NULL,
+  `usu_correo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `usu_contraseña` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `usu_objetivo` varchar(10) NOT NULL,
-  `usu_nivel` VARCHAR(40) NOT NULL,
-  `usu_tipo` VARCHAR(40) NOT NULL DEFAULT 'cliente',
-  `usu_contraseña` VARCHAR(100) NOT NULL,
-  `usu_Concontraseña` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `usu_correo` (`usu_correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
