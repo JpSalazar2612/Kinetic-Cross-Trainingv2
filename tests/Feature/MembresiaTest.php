@@ -48,7 +48,7 @@ uses(WithFaker::class);
         'detalles' => $data['detalles'],
         'duracion_dias' => $data['duracion_dias'],
     ]);
-});
+
 
 
 test('destroy', function () { 
@@ -194,5 +194,4 @@ test('store', function () {
 test('update', function () {
     // Ejecuta el seeder de roles
     $this->artisan('db:seed', ['--class' => 'RolSeeder']);
-
-    // Simula un usuario autenticado con el rol de Editor
+});
